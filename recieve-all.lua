@@ -4,7 +4,7 @@ local modem = peripheral.find("modem") or error("No modem attached", 0)
 local periList = modem.getNamesRemote()
 
 modem.open(42)
-
+write("Waiting for message!")
 while true do
  local event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")  -- Wait for an event to occur
 print(("Message received  with message: '" .. tostring(message).. "'."))
