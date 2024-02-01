@@ -9,7 +9,7 @@ for i = 1, #periList do
 end
 
 --write the message
-write("To cancel press and hold 'CTRL - T'")
+--write("To cancel press and hold 'CTRL - T'")
 write(" ")
 write("what would you like to say?  ")
 local message = read()
