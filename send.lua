@@ -12,9 +12,6 @@ end
 write("To cancel press and hold 'CTRL - T'")
 write()
 write("what would you like to say?  ")
-if(message == stop) then
-
-
 local message = read()
 write("who are you sending it to?  ")
 local target = read() --ask for target
