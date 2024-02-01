@@ -10,7 +10,7 @@ end
 
 --write the message
 write("To cancel press and hold 'CTRL - T'")
-write()
+write(" ")
 write("what would you like to say?  ")
 local message = read()
 write("who are you sending it to?  ")
