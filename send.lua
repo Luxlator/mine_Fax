@@ -15,11 +15,16 @@ write("what would you like to say?  ")
 local message = read()
 write("who are you sending it to?  ")
 local target = read() --ask for target
+local name = modem.getNameLocal()
 for i=1, #periList do
-i = i +1
--- if target matches entity on list
-modem.transmit(42, 42, "dear " .. target .. ", " .. message) --transmits to target
-print("sent: ".. message)
+  i = i +1
+  local msg_tbl = {}
+  msg_tbl["sender"] = name;
+  msg_tbl["target"] = target;
+  msg_tbl["msg"] = message;
+  -- if target matches entity on list
+  modem.transmit(42, 42, textutils.serialize(msg_tbl,{compact=true})) --transmits to target
+  print("sent: ".. message)
 
 end
 

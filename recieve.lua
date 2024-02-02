@@ -4,22 +4,29 @@ local modem = peripheral.find("modem") or error("No modem attached", 0)
 local periList = modem.getNamesRemote()
 
 modem.open(42)
+local name = modem.getNameLocal()
 write("Waiting for message!")
-while true do
+while true do repeat
   local _, _, _, _, message_raw,_ = os.pullEvent("modem_message")  -- Wait for an event to occur
   
   local msg_tbl = textutils.unserialize(tostring(message_raw))
-  print("Received message from " .. msg_tbl["sender"] .. " to " .. msg_tbl["target"] .. " with the following message: " .. msg_tbl["msg"])
+  
+  if msg_tbl["receiver"] ~= name then
+    do break end
+  end
+
+  print("Received message from " .. msg_tbl["sender"] .. " with the following message: " .. msg_tbl["msg"])
 	
 	if not printer.newPage() then
     error("Cannot start a new page. Do you have ink and paper?")
+    do break end
   end
 
 
 	--text wrapper
 		local strings = require "cc.strings" -- include the module
 		local width, height = printer.getPageSize() -- get the size of the page in the printer
-		local text = msg_tbl["sender"] .. " to " .. msg_tbl["target"] .. " with the following message: " .. msg_tbl["msg"] -- the text you want to write
+		local text = msg_tbl["sender"] .. "sent the following message: " .. msg_tbl["msg"] -- the text you want to write
 		local wrapped = strings.wrap(text, width) -- wrap the text given the width   of the page
 
 		local y = height -- used to keep track of the vertical position on the page we are at. 
@@ -40,12 +47,8 @@ while true do
 --	printer.write(.. tostring(message))
 	speaker.playSound("entity.parrot.ambient") -- play alert sound
 	if not printer.endPage() then
-  error("Cannot end the page. Is there enough space?")
-end
+    error("Cannot end the page. Is there enough space?")
+  end
 
-print("We got mail!")
-
-
-
-
+  print("We got mail!")
 end
